@@ -4,6 +4,7 @@
 // It only exists here (rather than using `graphql-type-json` directly) because
 // we need to export Json along with JSON.
 //
+
 /*
 The MIT License (MIT)
 
@@ -28,7 +29,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 export default function makeGraphQLJSONTypes(graphql) {
-  const { GraphQLScalarType, Kind } = graphql;
+  const {
+    GraphQLScalarType,
+    Kind
+  } = graphql;
 
   function identity(value) {
     return value;
@@ -39,25 +43,32 @@ export default function makeGraphQLJSONTypes(graphql) {
       case Kind.STRING:
       case Kind.BOOLEAN:
         return ast.value;
+
       case Kind.INT:
       case Kind.FLOAT:
         return parseFloat(ast.value);
-      case Kind.OBJECT: {
-        const value = Object.create(null);
-        ast.fields.forEach(field => {
-          value[field.name.value] = parseLiteral(field.value, variables);
-        });
 
-        return value;
-      }
+      case Kind.OBJECT:
+        {
+          const value = Object.create(null);
+          ast.fields.forEach(field => {
+            value[field.name.value] = parseLiteral(field.value, variables);
+          });
+          return value;
+        }
+
       case Kind.LIST:
         return ast.values.map(n => parseLiteral(n, variables));
+
       case Kind.NULL:
         return null;
-      case Kind.VARIABLE: {
-        const name = ast.name.value;
-        return variables ? variables[name] : undefined;
-      }
+
+      case Kind.VARIABLE:
+        {
+          const name = ast.name.value;
+          return variables ? variables[name] : undefined;
+        }
+
       default:
         return undefined;
     }
@@ -65,25 +76,20 @@ export default function makeGraphQLJSONTypes(graphql) {
 
   const GraphQLJSON = new GraphQLScalarType({
     name: "JSON",
-    description:
-      "The `JSON` scalar type represents JSON values as specified by " +
-      "[ECMA-404](http://www.ecma-international.org/" +
-      "publications/files/ECMA-ST/ECMA-404.pdf).",
+    description: "The `JSON` scalar type represents JSON values as specified by " + "[ECMA-404](http://www.ecma-international.org/" + "publications/files/ECMA-ST/ECMA-404.pdf).",
     serialize: identity,
     parseValue: identity,
-    parseLiteral,
+    parseLiteral
   });
-
   const GraphQLJson = new GraphQLScalarType({
     name: "Json",
-    description:
-      "The `Json` scalar type represents JSON values as specified by " +
-      "[ECMA-404](http://www.ecma-international.org/" +
-      "publications/files/ECMA-ST/ECMA-404.pdf).",
+    description: "The `Json` scalar type represents JSON values as specified by " + "[ECMA-404](http://www.ecma-international.org/" + "publications/files/ECMA-ST/ECMA-404.pdf).",
     serialize: identity,
     parseValue: identity,
-    parseLiteral,
+    parseLiteral
   });
-
-  return { GraphQLJSON, GraphQLJson };
+  return {
+    GraphQLJSON,
+    GraphQLJson
+  };
 }

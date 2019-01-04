@@ -1,4 +1,3 @@
-// @flow
 import PgBasicsPlugin from "./plugins/PgBasicsPlugin";
 import PgIntrospectionPlugin from "./plugins/PgIntrospectionPlugin";
 import PgTypesPlugin from "./plugins/PgTypesPlugin";
@@ -24,91 +23,21 @@ import PgRecordReturnTypesPlugin from "./plugins/PgRecordReturnTypesPlugin";
 import PgRecordFunctionConnectionPlugin from "./plugins/PgRecordFunctionConnectionPlugin";
 import PgScalarFunctionConnectionPlugin from "./plugins/PgScalarFunctionConnectionPlugin";
 import PageInfoStartEndCursor from "./plugins/PageInfoStartEndCursor";
-import PgConnectionTotalCount from "./plugins/PgConnectionTotalCount";
+import PgConnectionTotalCount from "./plugins/PgConnectionTotalCount"; // Mutations
 
-// Mutations
 import PgMutationCreatePlugin from "./plugins/PgMutationCreatePlugin";
 import PgMutationUpdateDeletePlugin from "./plugins/PgMutationUpdateDeletePlugin";
 import PgMutationProceduresPlugin from "./plugins/PgMutationProceduresPlugin";
 import PgMutationPayloadEdgePlugin from "./plugins/PgMutationPayloadEdgePlugin";
-
 import * as inflections from "./inflections";
-
 import parseIdentifier from "./parseIdentifier";
 import omit from "./omit";
 export { formatSQLForDebugging } from "./plugins/debugSql";
-
 export { parseIdentifier, omit };
-
-export const defaultPlugins = [
-  PgBasicsPlugin,
-  PgIntrospectionPlugin,
-  PgTypesPlugin,
-  PgJWTPlugin,
-  PgTablesPlugin,
-  PgConnectionArgFirstLastBeforeAfter,
-  PgConnectionArgOrderBy,
-  PgConnectionArgOrderByDefaultValue,
-  PgConnectionArgCondition,
-  PgAllRows,
-  PgColumnsPlugin,
-  PgColumnDeprecationPlugin,
-  PgForwardRelationPlugin,
-  PgBackwardRelationPlugin,
-  PgRowByUniqueConstraint,
-  PgComputedColumnsPlugin,
-  PgQueryProceduresPlugin,
-  PgOrderAllColumnsPlugin,
-  PgOrderByPrimaryKeyPlugin,
-  PgRowNode,
-  PgNodeAliasPostGraphile,
-  PgRecordReturnTypesPlugin,
-  PgRecordFunctionConnectionPlugin,
-  PgScalarFunctionConnectionPlugin, // For PostGraphile compatibility
-  PageInfoStartEndCursor, // For PostGraphile compatibility
-  PgConnectionTotalCount,
-
-  // Mutations
-  PgMutationCreatePlugin,
-  PgMutationUpdateDeletePlugin,
-  PgMutationProceduresPlugin,
-  PgMutationPayloadEdgePlugin,
-];
-
+export const defaultPlugins = [PgBasicsPlugin, PgIntrospectionPlugin, PgTypesPlugin, PgJWTPlugin, PgTablesPlugin, PgConnectionArgFirstLastBeforeAfter, PgConnectionArgOrderBy, PgConnectionArgOrderByDefaultValue, PgConnectionArgCondition, PgAllRows, PgColumnsPlugin, PgColumnDeprecationPlugin, PgForwardRelationPlugin, PgBackwardRelationPlugin, PgRowByUniqueConstraint, PgComputedColumnsPlugin, PgQueryProceduresPlugin, PgOrderAllColumnsPlugin, PgOrderByPrimaryKeyPlugin, PgRowNode, PgNodeAliasPostGraphile, PgRecordReturnTypesPlugin, PgRecordFunctionConnectionPlugin, PgScalarFunctionConnectionPlugin, // For PostGraphile compatibility
+PageInfoStartEndCursor, // For PostGraphile compatibility
+PgConnectionTotalCount, // Mutations
+PgMutationCreatePlugin, PgMutationUpdateDeletePlugin, PgMutationProceduresPlugin, PgMutationPayloadEdgePlugin];
 export { inflections };
-
-export {
-  PgBasicsPlugin,
-  PgIntrospectionPlugin,
-  PgTypesPlugin,
-  PgJWTPlugin,
-  PgTablesPlugin,
-  PgConnectionArgFirstLastBeforeAfter,
-  PgConnectionArgOrderBy,
-  PgConnectionArgOrderByDefaultValue,
-  PgConnectionArgCondition,
-  PgAllRows,
-  PgColumnsPlugin,
-  PgColumnDeprecationPlugin,
-  PgForwardRelationPlugin,
-  PgBackwardRelationPlugin,
-  PgRowByUniqueConstraint,
-  PgComputedColumnsPlugin,
-  PgQueryProceduresPlugin,
-  PgOrderAllColumnsPlugin,
-  PgOrderByPrimaryKeyPlugin,
-  PgRowNode,
-  PgNodeAliasPostGraphile,
-  PgNodeAliasPostGraphile as PgNodeAliasPostGraphQL,
-  PgRecordReturnTypesPlugin,
-  PgRecordFunctionConnectionPlugin,
-  PgScalarFunctionConnectionPlugin,
-  PageInfoStartEndCursor,
-  PgConnectionTotalCount,
-  PgMutationCreatePlugin,
-  PgMutationUpdateDeletePlugin,
-  PgMutationProceduresPlugin,
-  PgMutationPayloadEdgePlugin,
-};
-
+export { PgBasicsPlugin, PgIntrospectionPlugin, PgTypesPlugin, PgJWTPlugin, PgTablesPlugin, PgConnectionArgFirstLastBeforeAfter, PgConnectionArgOrderBy, PgConnectionArgOrderByDefaultValue, PgConnectionArgCondition, PgAllRows, PgColumnsPlugin, PgColumnDeprecationPlugin, PgForwardRelationPlugin, PgBackwardRelationPlugin, PgRowByUniqueConstraint, PgComputedColumnsPlugin, PgQueryProceduresPlugin, PgOrderAllColumnsPlugin, PgOrderByPrimaryKeyPlugin, PgRowNode, PgNodeAliasPostGraphile, PgNodeAliasPostGraphile as PgNodeAliasPostGraphQL, PgRecordReturnTypesPlugin, PgRecordFunctionConnectionPlugin, PgScalarFunctionConnectionPlugin, PageInfoStartEndCursor, PgConnectionTotalCount, PgMutationCreatePlugin, PgMutationUpdateDeletePlugin, PgMutationProceduresPlugin, PgMutationPayloadEdgePlugin };
 export { upperFirst, camelCase, constantCase } from "graphile-build";

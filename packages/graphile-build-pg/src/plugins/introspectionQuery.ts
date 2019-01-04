@@ -1,9 +1,8 @@
-// @flow
-function makeIntrospectionQuery(
-  serverVersionNum: number,
-  options: { pgLegacyFunctionsOnly?: boolean } = {}
-): string {
-  const { pgLegacyFunctionsOnly } = options;
+function makeIntrospectionQuery(serverVersionNum: number, options: { pgLegacyFunctionsOnly?: boolean;
+} = {}): string {
+  const {
+    pgLegacyFunctionsOnly
+  } = options;
   return `\
 -- @see https://www.postgresql.org/docs/9.5/static/catalogs.html
 -- @see https://github.com/graphile/postgraphile/blob/master/resources/introspection-query.sql
@@ -76,20 +75,13 @@ with
       -- TODO: Variadic arguments.
       pro.provariadic = 0 and
       -- Filter our aggregate functions and window functions.
-      ${
-        serverVersionNum >= 110000
-          ? "pro.prokind = 'f'"
-          : "pro.proisagg = false and pro.proiswindow = false"
-      } and
-      ${
-        pgLegacyFunctionsOnly
-          ? `\
+      ${serverVersionNum >= 110000 ? "pro.prokind = 'f'" : "pro.proisagg = false and pro.proiswindow = false"} and
+      ${pgLegacyFunctionsOnly ? `\
       -- We want to make sure the argument mode for all of our arguments is
       -- \`IN\` which means \`proargmodes\` will be null.
       pro.proargmodes is null and
       -- Do not select procedures that return \`RECORD\` (oid 2249).
-      pro.prorettype <> 2249 and`
-          : `\
+      pro.prorettype <> 2249 and` : `\
       -- We want to make sure the argument modes for all of our arguments are
       -- \`IN\`, \`OUT\`, \`INOUT\`, or \`TABLE\` (not \`VARIADIC\`).
       (pro.proargmodes is null or pro.proargmodes <@ array['i','o','b','t']::"char"[]) and
@@ -97,8 +89,7 @@ with
       -- have \`OUT\`, \`INOUT\`, or \`TABLE\` arguments to define the return type.
       (pro.prorettype <> 2249 or pro.proargmodes && array['o','b','t']::"char"[]) and
       -- Do not select procedures that have \`RECORD\` arguments.
-      (pro.proallargtypes is null or not (pro.proallargtypes @> array[2249::oid])) and`
-      }
+      (pro.proallargtypes is null or not (pro.proallargtypes @> array[2249::oid])) and`}
       -- Do not select procedures that create range types. These are utility
       -- functions that really don’t need to be exposed in an API.
       pro.proname not in (select typ.typname from pg_catalog.pg_type as typ where typ.typtype = 'r' and typ.typnamespace = pro.pronamespace) and
@@ -343,9 +334,7 @@ with
       idx.indisreplident as "isReplicaIdentity",
       idx.indisvalid as "isValid", -- if false, don't use for queries
       idx.indkey as "attributeNums",
-      ${
-        serverVersionNum >= 90600
-          ? `\
+      ${serverVersionNum >= 90600 ? `\
       (
         select array_agg(pg_index_column_has_property(idx.indexrelid,n::int2,'asc'))
         from unnest(idx.indkey) with ordinality as ord(key,n)
@@ -353,9 +342,7 @@ with
       (
         select array_agg(pg_index_column_has_property(idx.indexrelid,n::int2,'nulls_first'))
         from unnest(idx.indkey) with ordinality as ord(key,n)
-      ) as "attributePropertiesNullsFirst",`
-          : ""
-      }
+      ) as "attributePropertiesNullsFirst",` : ""}
       dsc.description as "description"
     from
       pg_catalog.pg_index as idx
@@ -392,5 +379,5 @@ select row_to_json(x) as object from indexes as x
 }
 
 module.exports = {
-  makeIntrospectionQuery,
+  makeIntrospectionQuery
 };
