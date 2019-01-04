@@ -10,12 +10,13 @@ import assert from "assert";
 const identity = _ => _ !== null && _ !== undefined; // $FlowFixMe
 
 
-export default ((queryBuilderOptions: QueryBuilderOptions = {}) => (from: SQL, fromAlias: SQL | null | undefined, resolveData: DataForType, options: { withPagination?: boolean;,
-  withPaginationAsFields?: boolean;,
-  asJson?: boolean;,
-  asJsonAggregate?: boolean;,
-  addNullCase?: boolean;,
-  onlyJsonField?: boolean;,
+export default ((queryBuilderOptions: QueryBuilderOptions = {}) => (from: SQL, fromAlias: SQL | null | undefined, resolveData: DataForType, options: {
+  withPagination?: boolean;
+  withPaginationAsFields?: boolean;
+  asJson?: boolean;
+  asJsonAggregate?: boolean;
+  addNullCase?: boolean;
+  onlyJsonField?: boolean;
 }, withBuilder?: (builder: QueryBuilder) => void) => {
   const {
     pgQuery,

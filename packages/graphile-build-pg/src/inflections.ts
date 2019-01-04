@@ -1,6 +1,10 @@
 import { upperCamelCase, camelCase, constantCase, pluralize, singularize } from "graphile-build";
 import { preventEmptyResult } from "./plugins/PgBasicsPlugin";
-type Keys = Array;
+type Keys = Array<{
+  column: string;
+  table: string;
+  schema: string | null | undefined;
+}>;
 type InflectorUtils = {
   constantCase: (a: string) => string;
   camelCase: (a: string) => string;
