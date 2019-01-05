@@ -20,7 +20,9 @@ export type PgNamespace = {
   name: string;
   comment: string | null | undefined;
   description: string | null | undefined;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
 };
 export type PgProc = {
   kind: "procedure";
@@ -39,7 +41,9 @@ export type PgProc = {
   argModes: Array<"i" | "o" | "b" | "v" | "t">;
   argDefaultsNum: number;
   namespace: PgNamespace;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
   cost: number;
   aclExecutable: boolean;
 };
@@ -60,7 +64,9 @@ export type PgClass = {
   isExtensionConfigurationTable: boolean;
   namespace: PgNamespace;
   type: PgType;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
   attributes: [PgAttribute];
   constraints: [PgConstraint];
   foreignConstraints: [PgConstraint];
@@ -89,7 +95,9 @@ export type PgType = {
   classId: string | null | undefined;
   domainBaseTypeId: string | null | undefined;
   domainTypeModifier: number | null | undefined;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
 };
 export type PgAttribute = {
   kind: "attribute";
@@ -106,7 +114,9 @@ export type PgAttribute = {
   class: PgClass;
   type: PgType;
   namespace: PgNamespace;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
   aclSelectable: boolean;
   aclInsertable: boolean;
   aclUpdatable: boolean;
@@ -130,7 +140,9 @@ export type PgConstraint = {
   foreignKeyAttributes: [PgAttribute];
   namespace: PgNamespace;
   isIndexed: boolean | null | undefined;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
 };
 export type PgExtension = {
   kind: "extension";
@@ -142,7 +154,9 @@ export type PgExtension = {
   configurationClassIds?: Array<string>;
   comment: string | null | undefined;
   description: string | null | undefined;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
 };
 export type PgIndex = {
   kind: "index";
@@ -157,7 +171,9 @@ export type PgIndex = {
   attributePropertiesAsc: Array<boolean> | null | undefined;
   attributePropertiesNullsFirst: Array<boolean> | null | undefined;
   description: string | null | undefined;
-  tags: {};
+  tags: {
+    [a: string]: string;
+  };
 };
 export type PgEntity = PgNamespace | PgProc | PgClass | PgType | PgAttribute | PgConstraint | PgExtension | PgIndex;
 

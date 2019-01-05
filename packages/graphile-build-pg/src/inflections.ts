@@ -19,8 +19,12 @@ export const defaultUtils: InflectorUtils = {
   pluralize,
   singularize
 };
-export type Inflector = {};
-export const newInflector = (overrides: {} | null | undefined = undefined, {
+export type Inflector = {
+  [a: string]: () => string;
+};
+export const newInflector = (overrides: {
+  [a: string]: () => string;
+} | null | undefined = undefined, {
   constantCase,
   camelCase,
   upperCamelCase,

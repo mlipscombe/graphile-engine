@@ -6,7 +6,7 @@ const isDev = process.env.POSTGRAPHILE_ENV === "development";
 type GenContext = {
   queryBuilder: QueryBuilder;
 };
-type Gen = (context: GenContext) => T;
+type Gen<T> = (context: GenContext) => T;
 
 function callIfNecessary<T>(o: Gen<T> | T, context: GenContext): T {
   if (typeof o === "function") {
@@ -29,14 +29,16 @@ type SQLAlias = SQL;
 type SQLGen = Gen<SQL> | SQL;
 type NumberGen = Gen<number> | number;
 type CursorValue = {};
-type CursorComparator = (val: CursorValue, isAfter: boolean) => void;
+type CursorComparator = (val: CursorValue, isAfter: boolean) => undefined;
 export type QueryBuilderOptions = {
   supportsJSONB?: boolean;
 };
 
 class QueryBuilder {
   supportsJSONB: boolean;
-  locks: {};
+  locks: {
+    [a: string]: true | string;
+  };
   finalized: boolean;
   data: {
     cursorPrefix: Array<string>;
@@ -55,7 +57,9 @@ class QueryBuilder {
     offset: NumberGen | null | undefined;
     first: number | null | undefined;
     last: number | null | undefined;
-    beforeLock: {};
+    beforeLock: {
+      [a: string]: Array<() => undefined>;
+    };
     cursorComparator: CursorComparator | null | undefined;
   };
   compiledData: {
@@ -165,7 +169,7 @@ class QueryBuilder {
   } // ----------------------------------------
 
 
-  beforeLock(field: string, fn: () => void) {
+  beforeLock(field: string, fn: () => undefined) {
     this.checkLock(field);
     this.data.beforeLock[field] = this.data.beforeLock[field] || [];
     this.data.beforeLock[field].push(fn);

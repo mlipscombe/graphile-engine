@@ -22,7 +22,9 @@ type Keys = Array<{
 
 const identity = _ => _;
 
-export function preventEmptyResult<O extends {}>(obj: O): $ObjMap<O, <V>(a: V) => V> {
+export function preventEmptyResult<O extends {
+  [key: string]: () => string;
+}>(obj: O): $ObjMap<O, <V>(a: V) => V> {
   return Object.keys(obj).reduce((memo, key) => {
     const fn = obj[key];
 

@@ -7,7 +7,7 @@ function constructorName(obj) {
 } // Some duck-typing
 
 
-function quacksLikePgClient(pgConfig: any): boolean {
+function quacksLikePgClient(pgConfig: unknown): boolean {
   // A diagnosis of exclusion
   if (!pgConfig || typeof pgConfig !== "object") return false;
   if (constructorName(pgConfig) !== "Client") return false;
@@ -18,7 +18,7 @@ function quacksLikePgClient(pgConfig: any): boolean {
   return true;
 }
 
-export function quacksLikePgPool(pgConfig: any): boolean {
+export function quacksLikePgPool(pgConfig: unknown): boolean {
   // A diagnosis of exclusion
   if (!pgConfig || typeof pgConfig !== "object") return false;
 

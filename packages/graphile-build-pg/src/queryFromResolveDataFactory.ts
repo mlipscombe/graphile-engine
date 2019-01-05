@@ -17,7 +17,7 @@ export default ((queryBuilderOptions: QueryBuilderOptions = {}) => (from: SQL, f
   asJsonAggregate?: boolean;
   addNullCase?: boolean;
   onlyJsonField?: boolean;
-}, withBuilder?: (builder: QueryBuilder) => void) => {
+}, withBuilder?: (builder: QueryBuilder) => undefined) => {
   const {
     pgQuery,
     pgCursorPrefix: reallyRawCursorPrefix,
